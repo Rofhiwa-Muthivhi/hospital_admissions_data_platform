@@ -1,79 +1,178 @@
-# Hospital Admissions Data Pipeline — Student Project
 
-A hands-on data engineering exercise: take a messy, duplicate-riddled hospital
-admissions extract and turn it into a clean, deduplicated dataset you can
-confidently report on.
+![Hospital Admissions Data Pipeline Banner](06_assets/banner.png)
 
-The data is **entirely synthetic** — no real patients, no real ID numbers —
-built specifically so it contains realistic data quality problems to solve.
+## 📌 Project Overview
 
----
+This project is a hands-on data engineering project focused on building a data pipeline for hospital admissions data.
 
-## What's in this repo
+The goal is to take raw hospital admission data that contains duplicates and potential data quality issues, process it through an ETL pipeline, and produce a clean and reliable dataset that can be used for reporting and analysis.
 
-| File | Purpose |
-|---|---|
-| `hospital_admissions_raw.csv` | Sample data to load. 108 rows: 100 unique patients + 8 duplicate admission entries. |
-| `hospital_pipeline.sql` | Reference schema + dedup/merge logic. Don't peek until you've had a go yourself. |
-| `hospital_admissions_spec.docx` | Full spec: data dictionary, prerequisites, and the practice questions below. |
+The project uses a synthetic dataset, so no real patient information is involved.
 
 ---
 
-## What you need before starting
+## 🎯 Business Context
 
-- A SQL engine: Postgres, Snowflake, or SQL Server all work (scripts are written for Postgres; swap syntax as needed)
-- A way to load a local CSV into a table (`psql \copy`, `COPY INTO`, or your platform's import tool)
-- A query tool/IDE (DBeaver, VS Code with a SQL extension, or your platform's console)
-- Comfort with: `SELECT` / `JOIN` / `GROUP BY`, window functions (`ROW_NUMBER`, `PARTITION BY`), and basic date arithmetic
+A hospital generates data every time a patient visits and goes through the admission process. This data can provide useful information about the patients being served, the diseases they are being treated for, the severity of their conditions, the wards being used, and how long patients stay in the hospital.
 
----
+For hospital management to make informed decisions, the underlying data needs to be accurate and reliable.
 
-## What you need to do
+If duplicate or inconsistent admission records are not handled properly, they can lead to inaccurate reporting and misleading insights.
 
-1. **Fork/clone this repo.**
-2. **Load `hospital_admissions_raw.csv` into a raw landing table, exactly as provided.** Don't pre-clean it — the duplicates are the point.
-3. **Design your own schema and dedup logic** for the curated table before checking the reference in `hospital_pipeline.sql`.
-   - Think carefully about what the *natural key* for one admission event actually is.
-4. **Run your dedup/merge step** and confirm you land on exactly 100 rows, with no duplicate admission events.
-5. **Answer the practice questions below** using your curated table, and commit your queries + answers to this repo (e.g. in an `answers.sql` or `answers.md` file).
+This project focuses on building the data engineering foundation needed to turn raw hospital admission data into trusted data for analysis and reporting.
 
 ---
 
-## Practice questions
+## ❗ Business Problem
 
-### A. Data quality & deduplication
-1. How many rows landed in the raw table, and how many remained after dedup? What does the difference tell you?
-2. Write a query that finds every duplicate admission entry in the raw table *before* you dedupe it.
-3. Why is `(patient_id, admission_date)` the correct natural key here, instead of `patient_id` alone? Describe a scenario where deduping on `patient_id` alone would silently delete a legitimate admission.
-4. One duplicate pair in this dataset differs only by ward casing (`"ICU"` vs `"icu"`). What other kinds of near-duplicates (typos, whitespace, date format drift) could break a naive dedup query, and how would you guard against each?
-5. Write a query that proves, after your merge runs, no `(patient_id, admission_date)` pair appears twice.
+The hospital admission data contains duplicate records and potential data quality issues that could affect the accuracy of management reporting.
 
-### B. Clinical / operational questions
-6. What is the admission rate (Admitted vs Not Admitted) for each severity level (low / medium / high)?
-7. Which disease has the highest number of admitted patients?
-8. Which ward has the most admissions — does that match what you'd expect given the severity mix?
-9. What is the average length of stay (`discharge_date − admission_date`) by severity level?
-10. Are there any patients marked "Not Admitted" despite having a high-severity disease? Is that a data quality issue, a business rule exception, or something to flag to a clinician?
-11. What is the age distribution (from `date_of_birth`) of admitted patients? Is any age group over- or under-represented?
+The challenge is to build a pipeline that can:
 
-### C. Pipeline design
-12. How would you automate this pipeline to run every time a new CSV of admissions lands? What should trigger a run?
-13. How would you detect a *new* kind of duplicate you haven't seen yet (e.g. same `national_id` but a different `patient_id` — a possible registration error) before it reaches the curated table?
-14. If this pipeline were pointed at real patient data tomorrow, what would need to change or be reviewed first?
+* Load the raw admission data without changing the source.
+* Identify duplicate admission events.
+* Apply the correct natural key for an admission.
+* Standardize and validate the data.
+* Produce a clean and deduplicated curated dataset.
+* Provide reliable data for analysis and reporting.
+
+The final dataset should allow a data analyst to confidently investigate hospital admission patterns and provide useful insights to hospital management.
 
 ---
 
-## Submission
+## 🎯 Project Objective
 
-Push your work to your fork with:
-- Your schema + dedup/merge SQL
-- Your answers to the practice questions (queries + short written answers)
-- A short note on any data quality issue you found that *isn't* covered by the questions above, if you spot one
+The main objective is to build a reliable ETL pipeline that transforms raw hospital admission data into a clean, deduplicated and reporting-ready dataset.
 
-## A note on the data
+The pipeline will focus on:
 
-This dataset was generated for training purposes only. Names, ID numbers,
-diagnoses, and outcomes are all fabricated. If you ever adapt this pipeline
-pattern for real patient data, it must go through your organization's data
-governance and privacy review first — none of that applies to this practice
-dataset, but it will matter the moment real data is involved.
+* Data ingestion
+* Data quality checks
+* Data standardization
+* Duplicate detection
+* Deduplication
+* Data validation
+* Curated data preparation
+* SQL-based analysis
+
+---
+
+## 🔍 Key Business Questions
+
+Using the curated dataset, the project will investigate questions such as:
+
+* What is the admission rate by severity level?
+* Which diseases have the highest number of admitted patients?
+* Which wards have the most admissions?
+* What is the average length of stay by severity?
+* Are there unusual admission outcomes that require further investigation?
+* What is the age distribution of admitted patients?
+
+These questions are intended to demonstrate how reliable data can support hospital reporting and operational decision-making.
+
+---
+
+## 🏗️ Project Pipeline
+
+```text
+Raw CSV
+   ↓
+Raw Landing Table
+   ↓
+Data Quality Checks
+   ↓
+Duplicate Detection
+   ↓
+Deduplication / Merge
+   ↓
+Curated Table
+   ↓
+SQL Analysis
+   ↓
+Reporting & Insights
+```
+
+The raw dataset contains **108 records**, including deliberate duplicate admission entries. The target curated dataset is **100 unique admission events**.
+
+---
+
+## 📂 Project Structure
+
+```text
+hospital_admissions_data_platform/
+│
+├── 01_dataset/
+│
+├── 02_project_specification/
+│
+├── 03_documentation/
+│
+├── 04_sql/
+│
+├── 05_assets/
+│
+└── README.md
+```
+
+---
+
+## 🛠️ Tools & Technologies
+
+* SQL Server / SSMS
+* SQL
+* Git
+* GitHub
+* Git Bash
+* VS Code
+* Google Sheets
+* Draw.io
+
+---
+
+## 📊 Dataset
+
+The dataset contains 11 columns covering patient information and hospital admission details:
+
+* Patient ID
+* First Name
+* Surname
+* National ID
+* Date of Birth
+* Disease
+* Severity
+* Admission Status
+* Ward
+* Admission Date
+* Discharge Date
+
+The data is entirely synthetic and was created specifically for this training project.
+
+---
+
+## 🔑 Natural Key
+
+An important part of the project is identifying what makes one admission event unique.
+
+For this dataset, the natural key is:
+
+```text
+(patient_id, admission_date)
+```
+
+A patient can have multiple admissions, so `patient_id` alone cannot be used to identify a unique admission event.
+
+---
+
+## 🔐 Data Governance
+
+The dataset used in this project is completely synthetic and does not contain real patient information.
+
+If this pipeline were to be adapted for real hospital data, additional data governance, privacy, security and access-control requirements would need to be reviewed before implementation.
+
+---
+
+## 👤 About This Project
+
+This project is part of my data engineering learning journey. I am using it to strengthen my understanding of ETL pipelines, data quality, SQL, data modelling and building reliable datasets for reporting and decision-making.
+
+My focus is not only on getting the SQL queries to work, but on understanding **why the data needs to be structured and processed in a particular way** and how the final data can support a real business problem.
