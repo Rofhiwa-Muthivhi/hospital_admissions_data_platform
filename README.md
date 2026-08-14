@@ -1,5 +1,9 @@
 
-![Hospital Admissions Data Pipeline Banner](06_assets/banner.png)
+<p align="center">
+  <img src="05_assets/banner.png" alt="Hospital Admissions Data Pipeline Banner" width="100%">
+</p>
+
+
 
 ## 📌 Project Overview
 
@@ -118,14 +122,11 @@ hospital_admissions_data_platform/
 
 ## 🛠️ Tools & Technologies
 
-* SQL Server / SSMS
-* SQL
-* Git
-* GitHub
-* Git Bash
-* VS Code
-* Google Sheets
-* Draw.io
+<p align="center">
+
+<img src="https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white" alt="SQL Server"/> <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQL"/> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"/> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/> <img src="https://img.shields.io/badge/Git_Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white" alt="Git Bash"/> <img src="https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="VS Code"/> <img src="https://img.shields.io/badge/Google_Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white" alt="Google Sheets"/> <img src="https://img.shields.io/badge/Draw.io-F08705?style=for-the-badge&logo=diagramsdotnet&logoColor=white" alt="Draw.io"/>
+
+</p>
 
 ---
 
@@ -133,17 +134,23 @@ hospital_admissions_data_platform/
 
 The dataset contains 11 columns covering patient information and hospital admission details:
 
-* Patient ID
-* First Name
-* Surname
-* National ID
-* Date of Birth
-* Disease
-* Severity
-* Admission Status
-* Ward
-* Admission Date
-* Discharge Date
+## 📊 Dataset
+
+The dataset contains 11 columns covering patient information and hospital admission details.
+
+| # | Column | Description |
+|---|---|---|
+| 1 | `patient_id` | Identifies the patient within the hospital system. |
+| 2 | `first_name` | Patient's first name. |
+| 3 | `surname` | Patient's surname. |
+| 4 | `national_id` | National identification number associated with the patient. |
+| 5 | `date_of_birth` | Patient's date of birth. |
+| 6 | `disease` | The disease or diagnosis associated with the patient's hospital visit. |
+| 7 | `severity` | Indicates how severe the patient's condition is: low, medium, or high. |
+| 8 | `admission_status` | Indicates whether the patient was admitted or not admitted. |
+| 9 | `ward` | The hospital ward assigned to the patient when applicable. |
+| 10 | `admission_date` | The date on which the admission event occurred. |
+| 11 | `discharge_date` | The date on which the patient was discharged, where applicable. |
 
 The data is entirely synthetic and was created specifically for this training project.
 
