@@ -132,10 +132,6 @@ hospital_admissions_data_platform/
 
 ## 📊 Dataset
 
-The dataset contains 11 columns covering patient information and hospital admission details:
-
-## 📊 Dataset
-
 The dataset contains 11 columns covering patient information and hospital admission details.
 
 | # | Column | Description |
