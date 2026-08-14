@@ -4,7 +4,7 @@ The purpose of data profiling is to understand what was loaded into the raw tabl
 
 I am using SQL to establish a baseline for the dataset and identify areas that need further investigation.
 
-## 1)Hospital Amissions
+## 1)Hospital Amissions Profiling
 #### Total Number of Raw Records
 
 I ran this query to confirm how many records were loaded into the raw table. This gives me a baseline before any deduplication or transformation takes place.
@@ -43,3 +43,10 @@ I ran this query to check for NULL or blank values across the main columns in th
 The raw table contains 108 records. No NULL or blank values were found in the patient, demographic, disease, severity, admission status, ward or admission date fields.
 The only NULL values were found in **discharge_date**, with 45 records affected.
 The ward column returned 0 missing values because the **N/A** values are stored as text rather than NULL.
+
+## 4)Admission Event Profiling
+
+I ran this query to identify patient and admission date combinations that appear more than once in the raw table. This helps me understand whether repeated patient records represent duplicate admission events or potentially legitimate multiple admissions.
+The query identified 8 `(patient_id, admission_date)` combinations that appear twice in the raw table.
+
+This accounts for the 8 duplicate admission entries expected in the dataset. The raw table contains 108 records, and removing one duplicate from each of the 8 repeated admission events would result in 100 unique admission events.

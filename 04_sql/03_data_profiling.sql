@@ -2,7 +2,7 @@ USE hospital;
 GO
 
 -- ============================================
--- Hospital Admissions Data Profiling
+-- 1) Hospital Admissions Profiling
 -- ============================================
 
 -- How many records were loaded into the raw admissions table?
@@ -28,7 +28,7 @@ FROM [hospital].[dbo].[hospital_admissions_raw];
 GO
 
 -- ============================================
--- Categorical Data Profiling
+-- 2) Categorical Data Profiling
 -- ============================================
 
 -- How are patients distributed across the different severity levels?
@@ -65,9 +65,10 @@ GO
 
 
 -- ============================================
--- Missing Value Profiling
+-- 3) Missing Value Profiling
 -- ============================================
 
+-- Which patient and admission fields contain NULL or blank values?
 SELECT
     COUNT(*) AS total_rows,
     SUM(CASE WHEN patient_id IS NULL OR LTRIM(RTRIM(patient_id)) = '' THEN 1 ELSE 0 END) AS patient_id_missing,
@@ -82,4 +83,18 @@ SELECT
     SUM(CASE WHEN admission_date IS NULL THEN 1 ELSE 0 END) AS admission_date_missing,
     SUM(CASE WHEN discharge_date IS NULL THEN 1 ELSE 0 END) AS discharge_date_missing
 FROM [hospital].[dbo].[hospital_admissions_raw];
+GO
+
+-- ============================================
+-- 4) Admission Event Profiling
+-- ============================================
+
+-- Which patient and admission date combinations appear more than once?
+SELECT patient_id,
+       admission_date,
+       COUNT(*) AS admission_record_count
+FROM [hospital].[dbo].[hospital_admissions_raw]
+GROUP BY patient_id,admission_date
+HAVING COUNT(*) > 1
+ORDER BY admission_record_count DESC;
 GO
